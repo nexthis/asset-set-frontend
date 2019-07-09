@@ -2,6 +2,7 @@ import React from 'react';
 
 import SEO from 'components/SEO';
 import SVG from 'react-inlinesvg';
+import Wave from 'assets/wave.svg';
 import {
   Container,
   Block,
@@ -10,9 +11,8 @@ import {
   Text,
   ButtonWraper,
   StyledButton,
+  TextWrapper,
 } from './LandingPage.style';
-
-import Wave from '../../assets/wave.svg';
 
 const LandingPage = () => (
   <Container>
@@ -22,7 +22,7 @@ const LandingPage = () => (
       <SVG src={Wave} />
     </Block>
 
-    <div>
+    <TextWrapper>
       <Title>asset set</Title>
 
       <Text>
@@ -30,6 +30,7 @@ const LandingPage = () => (
         industry. It was first used in the 15th century by an unknown artist
         printer to fill in the text of the trial book.
       </Text>
+
       <ButtonWraper>
         <StyledButton variant="contained" color="primary">
           Get Started
@@ -38,7 +39,7 @@ const LandingPage = () => (
           about us
         </StyledButton>
       </ButtonWraper>
-    </div>
+    </TextWrapper>
 
     <Hero>
       <SVG src={Wave} />
