@@ -12,6 +12,7 @@ module.exports = {
   devServer: {
     contentBase: './build',
     open: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
