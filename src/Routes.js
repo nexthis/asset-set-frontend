@@ -7,6 +7,7 @@ import GlobalStyle from 'theme/GlobalStyle';
 import { StylesProvider } from '@material-ui/styles';
 
 import LandingPage from 'Pages/LandingPage/LandingPage';
+import HomePage from 'Pages/HomePage/HomePage';
 
 const Routes = () => (
   <>
@@ -15,6 +16,7 @@ const Routes = () => (
       <StylesProvider injectFirst>
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <Route path="/home" component={HomePage} />
         </Switch>
       </StylesProvider>
     </ThemeProvider>

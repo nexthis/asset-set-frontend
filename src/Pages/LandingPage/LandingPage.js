@@ -1,8 +1,10 @@
 import React from 'react';
 
-import SEO from 'components/SEO';
+import SEO from 'components/SEO/SEO';
 import SVG from 'react-inlinesvg';
 import Wave from 'assets/wave.svg';
+import ButtonLink from 'components/ButtonLink/ButtonLink';
+
 import {
   Container,
   Block,
@@ -16,7 +18,7 @@ import {
 
 const LandingPage = () => (
   <Container>
-    <SEO title="home" />
+    <SEO title="welcome" />
 
     <Block>
       <SVG src={Wave} />
@@ -32,7 +34,12 @@ const LandingPage = () => (
       </Text>
 
       <ButtonWraper>
-        <StyledButton variant="contained" color="primary">
+        <StyledButton
+          component={ButtonLink}
+          to="/home"
+          variant="contained"
+          color="primary"
+        >
           Get Started
         </StyledButton>
         <StyledButton m="5" variant="text" color="primary">
