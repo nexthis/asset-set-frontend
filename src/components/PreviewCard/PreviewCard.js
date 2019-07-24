@@ -1,5 +1,4 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types';
 
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import LazyImage from '../LazyImage/LazyImage';
 
 import { Card, CardMedia, CardTitle, ColorBox } from './PreviewCard.style';
 
@@ -16,10 +16,9 @@ const PreviewCard = ({ picture, title, theme, colors }) => {
   return (
     <Card>
       <CardActionArea>
-        {/* fix height to auto height */}
-        <LazyLoad once height={281}>
+        <LazyImage once height={281}>
           <CardMedia image={picture.image} title={picture.title} />
-        </LazyLoad>
+        </LazyImage>
       </CardActionArea>
 
       <CardContent>
