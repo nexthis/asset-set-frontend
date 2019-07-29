@@ -22,6 +22,17 @@ class BackgroundSpray extends React.PureComponent {
     });
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if(nextProps.igniter){
+  //     //this.setState({items: []});
+  //     this.setState({ maxHeight: document.body.scrollHeight });
+  //     setTimeout(() => {
+  //       this.generateIteams('left');
+  //       this.generateIteams('right');
+  //     });
+  //   }
+  // }
+
   getRandomShapes() {
     const array = [Spray1, Spray2, Spray3, Spray4];
     return Random.randomArrayValue(array);
@@ -55,7 +66,7 @@ class BackgroundSpray extends React.PureComponent {
         shape: shape,
         position: position,
         side: side,
-        id: Random.randomInt(0, 1000),
+        id: Random.randomInt(0, 100000) + Random.randomHexColor(),
       };
       _items.push(item);
     }

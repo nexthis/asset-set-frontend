@@ -26,10 +26,11 @@ const PreviewCard = ({ picture, title, theme, colors }) => {
           <CardTitle>{title}</CardTitle>
 
           <Box display="flex">
-            <ColorBox boxShadow={2} bgcolor={colors[0]} />
-            <ColorBox boxShadow={2} bgcolor="black" />
-            <ColorBox boxShadow={2} bgcolor="black" />
-            <ColorBox boxShadow={2} bgcolor="black" />
+            {/*eslint-disable */}
+            {colors.map((item, index) => (
+              <ColorBox boxShadow={2} key={item + index} bgcolor={item} />
+            ))}
+            {/*eslint-enable */}
           </Box>
         </Box>
       </CardContent>
@@ -58,7 +59,7 @@ PreviewCard.propTypes = {
   }).isRequired,
 
   title: PropTypes.string.isRequired,
-  colors: PropTypes.objectOf(PropTypes.string).isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   theme: PropTypes.string,
 };
 

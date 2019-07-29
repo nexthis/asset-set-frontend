@@ -1,129 +1,70 @@
 import React from 'react';
+import axios from 'axios';
+import throttle from 'utils/Throttle';
 
 import SEO from 'components/SEO/SEO';
 import Grid from '@material-ui/core/Grid';
-import Card from '../../components/PreviewCard/PreviewCard';
-import BackgroundSpray from '../../components/BackgroundSpray/BackgroundSpray';
+import Card from 'components/PreviewCard/PreviewCard';
+import BackgroundSpray from 'components/BackgroundSpray/BackgroundSpray';
 
-import { Container } from './HomePage.style';
+import { Container, Loading } from './HomePage.style';
 
-const HomePage = () => (
-  <>
-    <BackgroundSpray />
-    <Container>
-      <SEO title="home" />
-      <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/800/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/500/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/800/500', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/800/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/800/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/800/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/1000/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/830/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/810/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/840/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/850/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card
-            title="test"
-            colors={['#ff4']}
-            picture={{ image: 'https://picsum.photos/950/900', title: 'test' }}
-          >
-            asd
-          </Card>
-        </Grid>
-      </Grid>
-    </Container>
-  </>
-);
+class HomePage extends React.PureComponent {
+  state = {
+    posts: [],
+    maxPage: 0,
+    currentPage: 1,
+    loading: true,
+  };
+
+  componentDidMount() {
+    window.addEventListener('scroll', throttle(this.onScroll, 200));
+    this.getDate();
+  }
+
+  onScroll = () => {
+    const { currentPage, maxPage } = this.state;
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (currentPage < maxPage)
+        this.setState({ currentPage: currentPage + 1 }, () => this.getDate());
+      else this.setState({ loading: false });
+    }
+  };
+
+  getDate() {
+    const { posts, currentPage } = this.state;
+    axios(`${process.env.APP_API}/posts/paginate?page=${currentPage}`).then(
+      json =>
+        this.setState({
+          posts: [...posts, ...json.data.data],
+          maxPage: json.data.last_page,
+        })
+    );
+  }
+
+  render() {
+    const { currentPage, posts, loading } = this.state;
+    return (
+      <>
+        <BackgroundSpray igniter={currentPage} />
+        <Container>
+          <SEO title="home" />
+          <Grid container spacing={4} justify="center">
+            {posts.map(item => (
+              <Grid item xs={12} md={6} key={item.id}>
+                <Card
+                  title={item.title}
+                  colors={['#ff4']}
+                  picture={{ image: item.image, title: 'test' }}
+                />
+              </Grid>
+            ))}
+            {loading ? <Loading /> : null}
+          </Grid>
+        </Container>
+      </>
+    );
+  }
+}
 
 export default HomePage;

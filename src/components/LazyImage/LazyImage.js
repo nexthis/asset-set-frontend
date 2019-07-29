@@ -24,8 +24,8 @@ const LazyImage = props => (
   <LazyLoad
     {...props}
     placeholder={<LazyImageAnimation />}
-    offset={[-200, 0]}
-    debounce={600}
+    // offset={[-200, 0]}
+    debounce={400}
   >
     {/*eslint-disable */}
     {props.children}

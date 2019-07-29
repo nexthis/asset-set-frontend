@@ -35,7 +35,7 @@ export const Box = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background: #0d0d0d;
+  background: ${({ theme }) => theme.black};
   transform: scale(0);
   transform-origin: center center;
   animation: ${LoaderAnimation} 2s infinite linear;
