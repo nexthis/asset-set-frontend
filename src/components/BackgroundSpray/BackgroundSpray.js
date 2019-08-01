@@ -11,6 +11,7 @@ import { SVG } from './BackgroundSpray.style';
 class BackgroundSpray extends React.PureComponent {
   state = {
     maxHeight: 0,
+    lastHeight: 0,
     items: [],
   };
 
@@ -22,14 +23,17 @@ class BackgroundSpray extends React.PureComponent {
     });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.igniter){
-  //     //this.setState({items: []});
-  //     this.setState({ maxHeight: document.body.scrollHeight });
-  //     setTimeout(() => {
-  //       this.generateIteams('left');
-  //       this.generateIteams('right');
-  //     });
+  // componentWillReceiveProps(nextProps){
+  //   if (nextProps.ignition ) {
+  //     if(this.state.maxHeight !== document.body.scrollHeight ){
+
+  //       this.setState({ lastHeight: this.state.maxHeight });
+  //       this.setState({ maxHeight: document.body.scrollHeight });
+  //       setTimeout(() => {
+  //         this.generateIteams('left');
+  //         this.generateIteams('right');
+  //       });
+  //     }
   //   }
   // }
 
@@ -39,13 +43,13 @@ class BackgroundSpray extends React.PureComponent {
   }
 
   generateIteams(side = 'left') {
-    const { maxHeight, items } = this.state;
+    const { maxHeight, lastHeight, items } = this.state;
     const padding = 30;
-    const _items = [];
+    let _items = items.filter(item => item.side === side);
     let value = maxHeight;
 
     for (let index = 0; index < value; index++) {
-      const height = Random.randomInt(300, 500);
+      const height = Random.randomInt(200, 500);
       const color = Random.randomHexColor();
       const shape = this.getRandomShapes();
       let position = 0;
@@ -53,12 +57,16 @@ class BackgroundSpray extends React.PureComponent {
       if (_items.length) {
         const last = _items[_items.length - 1];
         position =
-          last.position + padding + last.height + Random.randomInt(10, 200);
+          last.position +
+          padding +
+          last.height +
+          Random.randomInt(10, 200) +
+          lastHeight;
       } else {
         position = padding + Random.randomInt(10, 200);
       }
 
-      index += height / 0.6;
+      index += height / 0.6 + lastHeight;
 
       const item = {
         height: height,
@@ -66,7 +74,7 @@ class BackgroundSpray extends React.PureComponent {
         shape: shape,
         position: position,
         side: side,
-        id: Random.randomInt(0, 100000) + Random.randomHexColor(),
+        id: Random.randomInt(0, 100000),
       };
       _items.push(item);
     }

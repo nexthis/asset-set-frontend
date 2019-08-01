@@ -42,7 +42,7 @@ const LoadingBox = styled.div`
     animation-delay: 1s;
   }
   &:nth-child(3) {
-    animation-delay: 2s;
+    animation-delay: 2.3s;
   }
 `;
 

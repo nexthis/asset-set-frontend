@@ -39,7 +39,7 @@ const PreviewCard = ({ picture, title, theme, colors }) => {
         <IconButton aria-label="Like" size="small">
           <Icon fontSize="small">thumb_up_alt</Icon>
         </IconButton>{' '}
-        5
+        55
         <Button
           aria-controls="simple-menu"
           aria-haspopup="true"

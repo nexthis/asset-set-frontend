@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {Function} fn
+ * @param {Number} wait
+ */
 const throttle = (fn, wait) => {
   let time = Date.now();
   return () => {

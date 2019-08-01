@@ -18,7 +18,7 @@ class HomePage extends React.PureComponent {
   };
 
   componentDidMount() {
-    window.addEventListener('scroll', throttle(this.onScroll, 200));
+    window.addEventListener('scroll', throttle(this.onScroll, 100));
     this.getDate();
   }
 
@@ -43,10 +43,15 @@ class HomePage extends React.PureComponent {
   }
 
   render() {
-    const { currentPage, posts, loading } = this.state;
+    const { currentPage, maxPage, posts, loading } = this.state;
+
+    if (currentPage == maxPage) {
+      this.setState({ loading: false });
+    }
+
     return (
       <>
-        <BackgroundSpray igniter={currentPage} />
+        <BackgroundSpray ignition={currentPage} />
         <Container>
           <SEO title="home" />
           <Grid container spacing={4} justify="center">
