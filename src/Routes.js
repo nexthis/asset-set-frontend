@@ -8,6 +8,7 @@ import { StylesProvider } from '@material-ui/styles';
 
 const LandingPage = lazy(() => import('Pages/LandingPage/LandingPage'));
 const HomePage = lazy(() => import('Pages/HomePage/HomePage'));
+const Page = lazy(() => import('Pages/Page/Page'));
 
 const Routes = () => (
   <>
@@ -19,6 +20,7 @@ const Routes = () => (
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/page" component={Page} />
           </Switch>
         </Suspense>
       </StylesProvider>
