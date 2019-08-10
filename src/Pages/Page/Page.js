@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SEO from 'components/SEO/SEO';
 import Grid from '@material-ui/core/Grid';
-import Card from 'components/Post/Post';
+import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Box from '@material-ui/core/Box';
+import LazyImage from 'components/LazyImage/LazyImage';
 import BackgroundSpray from 'components/BackgroundSpray/BackgroundSpray';
 
-import { Container, Loading } from './Page.style';
+import { Container, Loading, Card, CardMedia, CardTitle, ColorBox, CardAuthor, CardDescription } from './Page.style';
 
 class Page extends React.PureComponent {
   state = {
@@ -16,6 +20,54 @@ class Page extends React.PureComponent {
   render() {
     const { currentPage, posts, loading } = this.state;
 
+    const Post = ({ picture, title, colors, author, description }) => {
+      return (
+        <Card>
+          <CardActionArea>
+            <LazyImage once height={281}>
+              <CardMedia image={picture.image} title={picture.title} />
+            </LazyImage>
+          </CardActionArea>
+    
+          <CardContent>
+            <Box display="flex" justifyContent="space-between">
+              <CardTitle>{title}</CardTitle>
+    
+              <Box display="flex" >
+                {/*eslint-disable */}
+                {colors.map((item, index) => (
+                  <ColorBox boxShadow={2} key={item + index} bgcolor={item} />
+                ))}
+                {/*eslint-enable */}
+              </Box>
+            </Box>
+    
+            <Box>
+              <CardAuthor>{author}</CardAuthor>
+            </Box>
+          
+            <Box>
+              <CardDescription>{description}</CardDescription>
+            </Box>
+          </CardContent>
+        </Card>
+      );
+    };
+
+    Post.propTypes = {
+      picture: PropTypes.shape({
+        image: PropTypes.string,
+        title: PropTypes.string,
+       author: PropTypes.string,
+      description: PropTypes.string,
+      }).isRequired,
+    
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    };
+
     return (
       <>
         <BackgroundSpray ignition={currentPage} />
@@ -24,7 +76,7 @@ class Page extends React.PureComponent {
           <Grid container spacing={4} justify="center">
             {posts.map(item => (
               <Grid item xs={6} md={8} lg={9} key={item.id}>
-                <Card
+                <Post
                   title={'Proza Libre & Open Sans'}
                   colors={['#ff4']}
                   picture={{ image: item.image, title: 'Proza Libre & Open Sans' }}
